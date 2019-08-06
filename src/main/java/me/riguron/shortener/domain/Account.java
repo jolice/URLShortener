@@ -1,11 +1,19 @@
 package me.riguron.shortener.domain;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
+@NoArgsConstructor
+@Setter(AccessLevel.NONE)
 public class Account {
 
     @Id
@@ -18,9 +26,6 @@ public class Account {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "account_id")
     private Set<ShortenedUrl> shortenedUrls = new HashSet<>();
-
-    public Account() {
-    }
 
     public Account(String accountId, String password) {
         this.accountId = accountId;
@@ -35,37 +40,4 @@ public class Account {
         return shortenedUrls;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Account)) {
-            return false;
-        }
-        Account account = (Account) o;
-        return Objects.equals(accountId, account.accountId)
-                &&
-                Objects.equals(getPassword(), account.getPassword())
-                &&
-                Objects.equals(getShortenedUrls(), account.getShortenedUrls());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(accountId, getPassword(), getShortenedUrls());
-    }
-
-    @Override
-    public String toString() {
-        return "Account{"
-                +
-                "accountId='" + accountId + '\''
-                +
-                ", password='" + password + '\''
-                +
-                ", shortenedUrls=" + shortenedUrls
-                +
-                '}';
-    }
 }
