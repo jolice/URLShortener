@@ -6,6 +6,7 @@ Plain implementation of the URL shortening service.
 
 - Configurable HTTP redirect status code, either 301 or 302
 - Keeping count of redirections for each URL
+- Fetching URLs shortened by a certain account
 - HTTP Basic authentication
 - Access through the secured REST API
 
