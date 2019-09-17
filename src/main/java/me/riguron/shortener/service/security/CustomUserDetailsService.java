@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collections;
 
-
 public class CustomUserDetailsService implements UserDetailsService {
 
     private AccountRepository accountRepository;
@@ -16,7 +15,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
