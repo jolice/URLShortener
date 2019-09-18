@@ -23,3 +23,4 @@ Plain implementation of the URL shortening service.
 - HSQL Database
 - Lombok
 - Maven
+
