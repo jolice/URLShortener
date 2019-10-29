@@ -72,7 +72,7 @@ You may also view redirection stats for your account:
 curl --header "Content-Type: application/json" \
   --user JohnDoe:UY5uD96d \
   --request GET \
-  http://localhost:8080/api/statistic
+  http://localhost:8080/api/stats
 ```
 
 Account statistics will be returned in the following format:
