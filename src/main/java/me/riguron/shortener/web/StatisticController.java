@@ -14,7 +14,6 @@ import java.security.Principal;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/api")
 public class StatisticController {
@@ -27,7 +26,7 @@ public class StatisticController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/statistic/", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/stats", consumes = "application/json", produces = "application/json")
     public Map<String, Integer> statistics(Principal principal) {
         return service.getShorteningsFor(principal.getName())
                 .stream()

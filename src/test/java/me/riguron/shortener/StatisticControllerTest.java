@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = WebTestConfiguration.class)
 public class StatisticControllerTest {
 
-    private static final String URL = "/api/statistic/";
+    private static final String URL = "/api/stats";
 
     @Autowired
     private MockMvc mockMvc;
