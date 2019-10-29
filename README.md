@@ -11,11 +11,53 @@ Plain implementation of the URL shortening service.
 
 To start a web an application, clone the project and run it:
 
-```
+```bash
 git clone git@github.com:riguron/URLShortener.git
 cd URLShortener
 mvn clean spring-boot:run
 ```
+
+# Usage
+
+In order to shorten URLs, you need to open an account:
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"AccountId":"JohnDoe"}' \
+  http://localhost:8080/api/account
+```
+
+The response looks like:
+
+```json
+{  
+   "success":true,
+   "description":"Your account is opened",
+   "password":"UY5uD96d"
+}
+```
+
+Now you are able to shorten URLs:
+
+```bash
+curl --header "Content-Type: application/json" \
+  --user JohnDoe:UY5uD96d \
+  --request POST \
+  --data '{"url":"https://www.google.com/"}' \
+  http://localhost:8080/api/register
+```
+
+Shortening will be returned in the following format:
+
+```json
+{  
+   "url":"AGiKGd"
+}
+```
+
+Now, [http://localhost:8080/AGiKGd](http://localhost:8080/AGiKGd) will redirect you to [https://www.google.com/](https://www.google.com/)
+
 
 # Features
 
