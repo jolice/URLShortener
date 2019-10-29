@@ -5,8 +5,16 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f934ddd367cc493d8ba463f87740eb06)](https://www.codacy.com/manual/riguron/URLShortener?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riguron/URLShortener&amp;utm_campaign=Badge_Grade)
 [![HitCount](http://hits.dwyl.io/riguron/URLShortener.svg)](http://hits.dwyl.io/riguron/URLShortener)
 
-
 Plain implementation of the URL shortening service.
+
+# Running
+
+To start a web an application, clone the project and run it:
+
+```
+git clone git@github.com:riguron/URLShortener.git
+mvn clean spring-boot:run
+```
 
 # Features
 
