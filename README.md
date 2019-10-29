@@ -7,7 +7,7 @@
 
 Plain implementation of the URL shortening service.
 
-# Features
+## Features
 
 - Configurable HTTP redirect status code, either 301 or 302
 - Keeping count of redirections for each URL
@@ -15,7 +15,7 @@ Plain implementation of the URL shortening service.
 - HTTP Basic authentication
 - Access through the secured REST API
 
-# Running
+## Running
 
 To start a web application, clone the project and run it:
 
@@ -25,7 +25,7 @@ cd URLShortener
 mvn clean spring-boot:run
 ```
 
-# Usage
+## Usage
 
 In order to shorten URLs, you need to open an account:
 
@@ -84,7 +84,7 @@ Account statistics will be returned in the following format:
 }
 ```
 
-# Technologies used
+## Technologies used
 
 - Spring Boot
 - Spring Security
