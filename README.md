@@ -13,6 +13,7 @@ To start a web an application, clone the project and run it:
 
 ```
 git clone git@github.com:riguron/URLShortener.git
+cd URLShortener
 mvn clean spring-boot:run
 ```
 
