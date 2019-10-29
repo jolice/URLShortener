@@ -17,7 +17,6 @@ import java.util.Set;
 @Service
 public class AccountService {
 
-
     private int passwordLength;
 
     private PasswordGenerator passwordGenerator;
@@ -33,13 +32,10 @@ public class AccountService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-
     @Transactional
-    public Optional<Account> findById(String accountId) {
-        return repository.findById(accountId);
+    public Optional<Account> getOneById(String accountId) {
+        return repository.getOneByAccountIdIgnoreCase(accountId);
     }
-
-
 
     @Transactional
     public Optional<String> createAccount(String accountID) {
@@ -54,12 +50,6 @@ public class AccountService {
         }
     }
 
-
-
-    @Transactional
-    public Set<ShortenedUrl> getShortenedUrls(String accountId) {
-        return repository.findOneByAccountIdIgnoreCase(accountId).map(Account::getShortenedUrls).orElse(Collections.emptySet());
-    }
 
     @Value("${password.length}")
     public void setPasswordLength(int passwordLength) {

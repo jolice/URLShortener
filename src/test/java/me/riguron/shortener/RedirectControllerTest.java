@@ -1,5 +1,6 @@
 package me.riguron.shortener;
 
+import me.riguron.shortener.domain.Account;
 import me.riguron.shortener.domain.ShortenedUrl;
 import me.riguron.shortener.service.URLShorteningService;
 import me.riguron.shortener.web.RedirectController;
@@ -40,7 +41,7 @@ public class RedirectControllerTest {
     @Test
     public void whenValidShorteningProvidedThenRedirected() throws Exception {
 
-        ShortenedUrl resultUrl = new ShortenedUrl(SHORTENED, REDIRECT_TARGET, REDIRECT_TYPE);
+        ShortenedUrl resultUrl = new ShortenedUrl(SHORTENED, REDIRECT_TARGET, REDIRECT_TYPE, new Account());
         when(urlShorteningService.getOriginUrl(eq(SHORTENED), eq(true))).thenReturn(Optional.of(resultUrl));
 
         mockMvc.perform(

@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -29,10 +27,14 @@ public class ShortenedUrl {
     @Column
     private int redirectType;
 
-    public ShortenedUrl(String shortening, String url, int redirectType) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Account account;
+
+    public ShortenedUrl(String shortening, String url, int redirectType, Account account) {
         this.shortening = shortening;
         this.url = url;
         this.redirectType = redirectType;
+        this.account = account;
     }
 
     public void use() {

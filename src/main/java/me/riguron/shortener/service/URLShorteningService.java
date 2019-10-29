@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Component
@@ -39,6 +41,11 @@ public class URLShorteningService {
         });
     }
 
+    @Transactional
+    public Set<ShortenedUrl> getShorteningsFor(String name) {
+        return urlRepository.getShorteningsFor(name);
+    }
+
 
     @Transactional
     public String shorten(Account account, String url, int redirectType) {
@@ -46,8 +53,8 @@ public class URLShorteningService {
         do {
             shortening = urlShorteningGenerator.generateShortUrl(shortUrlLength);
         } while (urlRepository.existsById(shortening));
-        ShortenedUrl shortenedUrl = new ShortenedUrl(shortening, url, redirectType);
-        account.getShortenedUrls().add(shortenedUrl);
+        ShortenedUrl shortenedUrl = new ShortenedUrl(shortening, url, redirectType, account);
+        urlRepository.save(shortenedUrl);
         return shortening;
     }
 

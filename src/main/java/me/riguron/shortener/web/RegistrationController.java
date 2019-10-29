@@ -32,12 +32,9 @@ public class RegistrationController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
     public RegistrationResponse doRegister(@RequestBody @Valid URLRegistration registration, Principal principal) {
-        return accountService
-                .findById(principal.getName())
-                .map(acc -> new RegistrationResponse(
-                        urlShorteningService.shorten(acc, registration.getUrl(), registration.getRedirectType()))
-                )
-                .orElseThrow(() -> new IllegalStateException("Security issue"));
+        return new RegistrationResponse(
+                urlShorteningService.shorten(accountService.getOneById(principal.getName()).orElseThrow(() -> new IllegalStateException("Security issue")
+                ), registration.getUrl(), registration.getRedirectType()));
 
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
@@ -17,10 +18,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
         return accountRepository
                 .findOneByAccountIdIgnoreCase(accountId)
-                .map(account -> new User(accountId, account.getPassword(), Collections.emptyList()))
+                .map(account -> new User(account.getAccountId(), account.getPassword(), Collections.emptyList()))
                 .orElseThrow(() -> new UsernameNotFoundException(accountId));
     }
 }

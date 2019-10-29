@@ -23,10 +23,6 @@ public class Account {
     @Column
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "account_id")
-    private Set<ShortenedUrl> shortenedUrls = new HashSet<>();
-
     public Account(String accountId, String password) {
         this.accountId = accountId;
         this.password = password;
@@ -34,10 +30,6 @@ public class Account {
 
     public String getPassword() {
         return password;
-    }
-
-    public Set<ShortenedUrl> getShortenedUrls() {
-        return shortenedUrls;
     }
 
 }

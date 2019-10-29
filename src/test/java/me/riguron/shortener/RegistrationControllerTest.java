@@ -7,16 +7,26 @@ import me.riguron.shortener.entity.register.URLRegistration;
 import me.riguron.shortener.service.AccountService;
 import me.riguron.shortener.service.URLShorteningService;
 import me.riguron.shortener.web.RegistrationController;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.support.WebDataBinderFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Optional;
 
@@ -25,6 +35,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -40,12 +51,11 @@ public class RegistrationControllerTest {
 
     private static final String SHORTENING = "aBcDe";
 
+    @MockBean
+    private AccountService accountService;
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private AccountService accountService;
 
     @MockBean
     private URLShorteningService urlShorteningService;
@@ -53,9 +63,8 @@ public class RegistrationControllerTest {
     @Test
     @WithMockUser(username = "username", password = "pass")
     public void whenRegisteredWithValidAccountThenRegistered() throws Exception {
-
         Account account = mock(Account.class);
-        when(accountService.findById("username")).thenReturn(Optional.of(account));
+        when(accountService.getOneById("username")).thenReturn(Optional.of(account));
 
         when(urlShorteningService.shorten(eq(account), eq(SHORTENING_TARGET), eq(REDIRECT_TYPE))).
                 thenReturn(SHORTENING);
@@ -67,6 +76,8 @@ public class RegistrationControllerTest {
                 post(URL).contentType(MediaType.APPLICATION_JSON).content(registrationToString(urlRegistration))
         ).andExpect(
                 status().isOk()
+        ).andDo(
+                print()
         ).andExpect(
                 jsonPath("$.url").value(SHORTENING)
         );
@@ -75,7 +86,7 @@ public class RegistrationControllerTest {
     @Test
     @WithMockUser(username = "username", password = "pass")
     public void whenAccountDoesNotExistsThenExceptionFired() throws Exception {
-        when(accountService.findById("username")).thenReturn(Optional.empty());
+        when(accountService.getOneById("username")).thenReturn(Optional.empty());
         URLRegistration urlRegistration = new URLRegistration(SHORTENING_TARGET, REDIRECT_TYPE);
         this.mockMvc.perform(
                 post(URL).contentType(MediaType.APPLICATION_JSON).content(registrationToString(urlRegistration))

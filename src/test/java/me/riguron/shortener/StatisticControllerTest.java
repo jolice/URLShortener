@@ -1,7 +1,9 @@
 package me.riguron.shortener;
 
+import me.riguron.shortener.domain.Account;
 import me.riguron.shortener.domain.ShortenedUrl;
 import me.riguron.shortener.service.AccountService;
+import me.riguron.shortener.service.URLShorteningService;
 import me.riguron.shortener.web.StatisticController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,22 +29,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = WebTestConfiguration.class)
 public class StatisticControllerTest {
 
-    private static final String URL = "/api/statistic/TEST";
+    private static final String URL = "/api/statistic/";
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AccountService accountService;
+    private URLShorteningService urlShorteningService;
 
     @Test
     @WithMockUser(username = "username", password = "pass")
     public void statistics() throws Exception {
 
-        when(accountService.getShortenedUrls("TEST")).thenReturn(
+        when(urlShorteningService.getShorteningsFor("username")).thenReturn(
                 new HashSet<>(
                         Collections.singletonList(
-                                new ShortenedUrl("short", "url1", 301)
+                                new ShortenedUrl("short", "url1", 301, new Account())
                         )
                 )
         );

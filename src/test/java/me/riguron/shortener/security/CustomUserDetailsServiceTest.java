@@ -31,6 +31,7 @@ public class CustomUserDetailsServiceTest {
         final String password = "password";
 
         Account account = mock(Account.class);
+        when(account.getAccountId()).thenReturn(accountId);
         when(account.getPassword()).thenReturn(password);
         when(accountRepository.findOneByAccountIdIgnoreCase(accountId)).thenReturn(Optional.of(account));
 

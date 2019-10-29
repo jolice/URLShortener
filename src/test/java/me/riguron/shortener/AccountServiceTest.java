@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
 public class AccountServiceTest {
 
     private static final String NAME = "name";
@@ -37,8 +36,8 @@ public class AccountServiceTest {
     public void whenFindByIdThenReturnsIdFromRepository() {
         Account account = mock(Account.class);
         Optional<Account> repositoryQueryResult = Optional.of(account);
-        when(accountRepository.findById(NAME)).thenReturn(repositoryQueryResult);
-        Optional<Account> serviceQueryResult = accountService.findById(NAME);
+        when(accountRepository.getOneByAccountIdIgnoreCase(NAME)).thenReturn(repositoryQueryResult);
+        Optional<Account> serviceQueryResult = accountService.getOneById(NAME);
         assertEquals(repositoryQueryResult, serviceQueryResult);
     }
 
@@ -55,14 +54,5 @@ public class AccountServiceTest {
         verify(accountRepository, times(1)).save(any());
     }
 
-    @Test
-    public void getShortenedUrls() {
-        Account account = new Account();
-        ShortenedUrl accountsShortenedUrl = new ShortenedUrl();
-        account.getShortenedUrls().add(accountsShortenedUrl);
-        Optional<Account> repositoryOptionalResult = Optional.of(account);
-        when(accountRepository.findOneByAccountIdIgnoreCase(NAME)).thenReturn(repositoryOptionalResult);
-        Set<ShortenedUrl> shortenedUrls = accountService.getShortenedUrls(NAME);
-        assertEquals(shortenedUrls, account.getShortenedUrls());
-    }
+
 }
