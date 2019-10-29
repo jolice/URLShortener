@@ -7,9 +7,17 @@
 
 Plain implementation of the URL shortening service.
 
+# Features
+
+- Configurable HTTP redirect status code, either 301 or 302
+- Keeping count of redirections for each URL
+- Fetching URLs shortened by a certain account
+- HTTP Basic authentication
+- Access through the secured REST API
+
 # Running
 
-To start a web an application, clone the project and run it:
+To start a web application, clone the project and run it:
 
 ```bash
 git clone git@github.com:riguron/URLShortener.git
@@ -58,14 +66,23 @@ Shortening will be returned in the following format:
 
 Now, [http://localhost:8080/AGiKGd](http://localhost:8080/AGiKGd) will redirect you to [https://www.google.com/](https://www.google.com/)
 
+You may also view redirection stats for your account:
 
-# Features
+```bash
+curl --header "Content-Type: application/json" \
+  --user JohnDoe:UY5uD96d \
+  --request GET \
+  http://localhost:8080/api/statistic
+```
 
-- Configurable HTTP redirect status code, either 301 or 302
-- Keeping count of redirections for each URL
-- Fetching URLs shortened by a certain account
-- HTTP Basic authentication
-- Access through the secured REST API
+Account statistics will be returned in the following format:
+
+```bash
+{  
+   "https://www.apple.com/":5,
+   "https://www.google.com/":7
+}
+```
 
 # Technologies used
 
