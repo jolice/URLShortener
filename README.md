@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/riguron/URLShortener.svg?branch=master)](https://travis-ci.org/riguron/URLShortener)
 [![codecov](https://codecov.io/gh/riguron/URLShortener/branch/master/graph/badge.svg)](https://codecov.io/gh/riguron/URLShortener)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f934ddd367cc493d8ba463f87740eb06)](https://www.codacy.com/manual/riguron/URLShortener?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riguron/URLShortener&amp;utm_campaign=Badge_Grade)
 [![HitCount](http://hits.dwyl.io/riguron/URLShortener.svg)](http://hits.dwyl.io/riguron/URLShortener)
 
 Plain implementation of the URL shortening service.
